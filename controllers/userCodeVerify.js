@@ -38,7 +38,7 @@ export const generateCode = async (req, res) => {
   });
   // 邮件封装
   const mailOptions = {
-    from: "Charid",
+    from: "charid",
     to: "pppp1308052418@gmail.com",
     subject: "验证码",
     html: `<h1>${code}</h1>`,
@@ -52,7 +52,6 @@ export const generateCode = async (req, res) => {
     }
     transporter.close();
     console.log("Message sent: %s", info.messageId);
-    
+    res.status(200).json({ message: "Generate code success" });
   });
-  res.status(200).json({ message: "Generate code success" });
 };
