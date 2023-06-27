@@ -5,9 +5,6 @@ export const generateCode = async (req, res) => {
   // 邮箱
   const { email } = req.body;
   // 生成验证码
-
-  let code = Math.random().toFixed(6).slice(-6);
-  console.log("code", code);
   try {
     // 查看之前是否有过请求记录
     const oldVerify = await userVerfiyModal.findOne({ email });
@@ -41,14 +38,13 @@ export const generateCode = async (req, res) => {
   });
   // 邮件封装
   const mailOptions = {
-    from: 'Charid"wp1308052418@gmail.com"',
+    from: "Charid",
     to: "pppp1308052418@gmail.com",
     subject: "验证码",
     html: `<h1>${code}</h1>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
-    confirm.log("a");
     if (error) {
       res.status(510).json({ message: "Generate Code Error" });
       console.log("error", error);
@@ -56,6 +52,7 @@ export const generateCode = async (req, res) => {
     }
     transporter.close();
     console.log("Message sent: %s", info.messageId);
-    res.status(200).json({ result: "Genracte code success" });
+    
   });
+  res.status(200).json({ message: "Generate code success" });
 };
