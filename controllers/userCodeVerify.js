@@ -4,6 +4,8 @@ import userVerfiyModal from "../models/userCodeVerify.js";
 export const generateCode = async (req, res) => {
   // 邮箱
   const { email } = req.body;
+  let code = Math.random().toFixed(6).slice(-6);
+  console.log("code", code);
   // 生成验证码
   try {
     // 查看之前是否有过请求记录
