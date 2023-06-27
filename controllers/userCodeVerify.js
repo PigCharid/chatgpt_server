@@ -35,7 +35,7 @@ export const generateCode = async (req, res) => {
     secureConnection: true, // use SSL
     auth: {
       user: "wp1308052418", // 自己的邮箱地址
-      pass: "zbrwlcwxvcgfqeai", // 不是密码，是授权码
+      pass: "zxhpwfmevyjxzqij", // 不是密码，是授权码
     },
   });
   // 邮件封装
