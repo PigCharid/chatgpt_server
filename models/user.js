@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   username: { type: String },
   logo: { type: String },
-  integral: { type: Number },
+  integral: { type: Number, default: 1000 },
 });
 
 const UserModal = mongoose.model("UserModal", userSchema);
