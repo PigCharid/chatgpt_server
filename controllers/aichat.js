@@ -2,6 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import * as dotenv from "dotenv";
 dotenv.config();
 export const aichat = async (req, res) => {
+  const { prompt } = req.body;
   try {
     console.log(process.env.OPENAI_API_KEY);
     const configuration = new Configuration({
@@ -10,7 +11,7 @@ export const aichat = async (req, res) => {
     const openai = new OpenAIApi(configuration);
     const chatCompletion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: "Hello world" }],
+      messages: [{ role: "user", content: prompt }],
     });
     console.log("chatCompletion", chatCompletion);
     console.log(chatCompletion.data.choices[0].message);
