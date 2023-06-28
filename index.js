@@ -5,6 +5,7 @@ import cors from "cors";
 import userRouter from "./routes/user.js";
 import ProjectRouter from "./routes/project.js";
 import userCodeVerifyRouter from "./routes/userCodeVerify.js";
+import aichatRouter from "./routes/aichat.js";
 // import nodemailer from "nodemailer";
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/project", ProjectRouter);
 app.use("/generatecode", userCodeVerifyRouter);
+
+app.use("/aichat", aichatRouter);
 
 // let code = Math.random().toFixed(6).slice(-6);
 //   console.log("code", code);

@@ -7,8 +7,10 @@ const router = express.Router();
 
 export const getProjects = async (req, res) => {
   try {
-    const postMessages = await ProjectModal.find();
-    res.status(200).json(postMessages);
+    const projects = await ProjectModal.find();
+    res.status(200).json({
+      project_info: { projects },
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -29,18 +31,17 @@ export const getProjects = async (req, res) => {
 export const createProject = async (req, res) => {
   const post = req.body;
 
-  const newProjectMessage = new ProjectModal({
+  // console.log(post);
+  const newProjectModal = new ProjectModal({
     ...post,
-    creator: req.userId,
-    createdAt: new Date().toISOString(),
   });
 
   try {
-    await newProjectMessage.save();
+    await newProjectModal.save();
 
-    res.status(201).json(newProjectMessage);
+    res.status(200).json({ message: "创建成功" });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(510).json({ message: error.message });
   }
 };
 

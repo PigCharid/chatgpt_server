@@ -10,7 +10,7 @@ export const signin = async (req, res) => {
   const { email, password, code } = req.body;
   console.log("password", password);
   console.log("code", code);
-  if (code === undefined) {
+  if (code === undefined || code === "") {
     try {
       const oldUser = await UserModal.findOne({ email });
 

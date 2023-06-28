@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import UserVerfiyModal from "../models/userCodeVerify.js";
+import * as dotenv from "dotenv";
+dotenv.config()
 // 生成验证码
 export const generateCode = async (req, res) => {
   const { email } = req.body;
@@ -39,8 +41,8 @@ export const generateCode = async (req, res) => {
   //   port: 465,
   //   secureConnection: true, // use SSL
   //   auth: {
-  //     user: "wp1308052418", // 自己的邮箱地址
-  //     pass: "zxhpwfmevyjxzqij", // 不是密码，是授权码
+  //     user: process.env.EMAIL, // 自己的邮箱地址
+  //     pass: process.env.EMAIL_CODE, // 不是密码，是授权码
   //   },
   // });
   // // 邮件封装

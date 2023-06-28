@@ -10,6 +10,6 @@ const userVerfiy = mongoose.Schema({
   },
 });
 
-const userVerfiyModal = mongoose.model("userVerfiyModal", userVerfiy);
+const UserVerfiyModal = mongoose.model("UserVerfiyModal", userVerfiy);
 
-export default userVerfiyModal;
+export default UserVerfiyModal;
