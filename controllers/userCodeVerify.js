@@ -1,15 +1,23 @@
 import nodemailer from "nodemailer";
 import UserVerfiyModal from "../models/userCodeVerify.js";
+import UserModal from "../models/user.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 // 生成验证码
 export const generateCode = async (req, res) => {
   const { email } = req.body;
+  if (!email) {
+    return res.status(510).json({ message: "请输入邮箱！" });
+  }
+
   let code = Math.random().toFixed(6).slice(-6);
   // 先用123456
   // let code = "123456";
   // 生成验证码
   try {
+    // 查看是否注册过了
+    const oldUser = await UserModal.findOne({ email });
+    if (!oldUser) return res.status(510).json({ message: "用户已经存在！" });
     // 查看之前是否有过请求记录
     const oldVerify = await UserVerfiyModal.findOne({ email });
     if (oldVerify === null) {
@@ -30,7 +38,7 @@ export const generateCode = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(510).json({ message: "验证码请求错误" });
     console.log(error);
   }
   // 邮箱链接
@@ -53,12 +61,12 @@ export const generateCode = async (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      res.status(510).json({ message: "Generate Code Error" });
+      res.status(510).json({ message: "验证码请求失败" });
       console.log("error", error);
       return;
     }
     transporter.close();
     console.log("Message sent: %s", info.messageId);
-    res.status(200).json({ message: "Generate code success" });
+    res.status(200).json({ message: "验证码请求成功" });
   });
 };

@@ -3,8 +3,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 export const aichat = async (req, res) => {
   const { prompt } = req.body;
+  if (prompt === undefined || prompt) {
+    res.status(510).json({ message: "咨询信息不能为空" });
+  }
   try {
-    console.log(process.env.OPENAI_API_KEY);
     const configuration = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -18,6 +20,6 @@ export const aichat = async (req, res) => {
     res.status(200).json({ result: chatCompletion.data.choices[0].message });
   } catch (error) {
     console.log("error", error);
-    res.status(510).json({ message: error.message });
+    res.status(510).json({ message: "AI咨询网络错误" });
   }
 };
