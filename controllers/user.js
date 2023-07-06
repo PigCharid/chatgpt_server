@@ -15,14 +15,14 @@ export const signin = async (req, res) => {
   const oldUser = await UserModal.findOne({ email });
   if (code === undefined || code === "") {
     try {
-      if (!oldUser) return res.status(510).json({ message: "用不不存在" });
+      if (!oldUser) return res.status(510).json({ message: "用户不存在" });
       const isPasswordCorrect = await bcrypt.compare(
         password,
         oldUser.password
       );
 
       if (!isPasswordCorrect)
-        return res.status(510).json({ message: "密码错误" });
+        return res.status(510).json({ message: "用户名或密码错误" });
 
       const token = jwt.sign(
         { email: oldUser.email, id: oldUser._id },
