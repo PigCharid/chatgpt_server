@@ -41,7 +41,7 @@ export const aichat = async (req, res) => {
     });
     console.log("chatCompletion", chatCompletion);
     console.log(chatCompletion.data.choices[0].message);
-    res.status(200).json({ result: chatCompletion.data.choices[0].message });
+    res.status(200).json({ message: chatCompletion.data.choices[0].message });
     await MessageModal.create({
       id: id,
       role: chatCompletion.data.choices[0].message.role,
