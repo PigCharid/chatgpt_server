@@ -39,6 +39,8 @@ export const generateCode = async (req, res) => {
         return res.status(510).json({ message: "60s请求一次" });
       }
     }
+
+    console.log(process.env.EMAIL)
     // 邮箱链接
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
