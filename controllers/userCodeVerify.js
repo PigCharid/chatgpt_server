@@ -43,6 +43,12 @@ export const generateCode = async (req, res) => {
     res.status(510).json({ message: "验证码请求错误" });
     console.log(error);
   }
+  console.log('====================================');
+  console.log(process.env.EMAIL);
+  console.log('====================================');
+  console.log('====================================');
+  console.log(process.env.EMAIL_CODE);
+  console.log('====================================');
   // 邮箱链接
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
