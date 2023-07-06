@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import UserModal from "../models/user.js";
 import UserVerfiyModal from "../models/userCodeVerify.js";
 
-const secret = "charid";
+const secret = "AnyGPT";
 
 export const signin = async (req, res) => {
   const { email, password, code } = req.body;

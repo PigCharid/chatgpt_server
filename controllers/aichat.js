@@ -9,7 +9,7 @@ export const aichat = async (req, res) => {
   console.log("role", role);
   console.log("prompt", prompt);
   // 检查参数信息
-  if (prompt === undefined || prompt) {
+  if (prompt === undefined || "") {
     res.status(510).json({ message: "咨询信息不能为空" });
   }
   try {
@@ -42,6 +42,12 @@ export const aichat = async (req, res) => {
     console.log("chatCompletion", chatCompletion);
     console.log(chatCompletion.data.choices[0].message);
     res.status(200).json({ result: chatCompletion.data.choices[0].message });
+    await MessageModal.create({
+      id: id,
+      role: chatCompletion.data.choices[0].message.role,
+      content: chatCompletion.data.choices[0].message.content,
+      createdAt: new Date(),
+    });
   } catch (error) {
     console.log("error", error);
     res.status(510).json({ message: "AI咨询网络错误" });

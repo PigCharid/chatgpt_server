@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const secret = 'test';
+const secret = "AnyGPT";
 
 const auth = async (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
 
     let decodedData;
 
-    if (token && isCustomAuth) {      
+    if (token && isCustomAuth) {
       decodedData = jwt.verify(token, secret);
 
       req.userId = decodedData?.id;
@@ -17,11 +17,12 @@ const auth = async (req, res, next) => {
       decodedData = jwt.decode(token);
 
       req.userId = decodedData?.sub;
-    }    
+    }
 
     next();
   } catch (error) {
     console.log(error);
+    return res.status(510).json({ message: "认证出错" });
   }
 };
 
