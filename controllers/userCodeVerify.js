@@ -11,15 +11,6 @@ export const generateCode = async (req, res) => {
   }
   let code = Math.random().toFixed(6).slice(-6);
   try {
-    // 查看是否注册过了
-    const oldUser = await UserModal.findOne({ email });
-    console.log("====================================");
-    console.log(email);
-    console.log("====================================");
-    console.log("====================================");
-    console.log(oldUser);
-    console.log("====================================");
-    if (oldUser) return res.status(510).json({ message: "用户已经存在！" });
     // 查看之前是否有过请求记录
     const oldVerify = await UserVerfiyModal.findOne({ email });
     if (oldVerify === null) {
@@ -43,12 +34,6 @@ export const generateCode = async (req, res) => {
     res.status(510).json({ message: "验证码请求错误" });
     console.log(error);
   }
-  console.log('====================================');
-  console.log(process.env.EMAIL);
-  console.log('====================================');
-  console.log('====================================');
-  console.log(process.env.EMAIL_CODE);
-  console.log('====================================');
   // 邮箱链接
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
