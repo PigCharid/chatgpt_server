@@ -3,18 +3,21 @@ import MessageModal from "../models/message.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 export const aichat = async (req, res) => {
-  const { id, reChatID, role, prompt } = req.body;
+  const { id, reChatID, role, prompt, reChat } = req.body;
 
   console.log("id", id);
   console.log("role", role);
   console.log("prompt", prompt);
   console.log("reChatID", reChatID);
+  console.log("reChat", reChat);
   // 检查参数信息
-  if (prompt === undefined || "") {
-    res.status(510).json({ message: "咨询信息不能为空" });
+  if (!reChat) {
+    if (prompt === undefined || "") {
+      res.status(510).json({ message: "咨询信息不能为空" });
+    }
   }
   try {
-    if (reChatID === 0) {
+    if (reChat === false) {
       await MessageModal.create({
         id: id,
         reChatID: reChatID,
@@ -24,7 +27,7 @@ export const aichat = async (req, res) => {
       });
       await MessageModal.create({
         id: id,
-        reChatID: reChatID,
+        reChatID: reChatID + 1,
         role: "assistant",
         content: "",
         createdAt: new Date(),
@@ -40,7 +43,7 @@ export const aichat = async (req, res) => {
       content,
     }));
     messages = messages.slice(0, messages.length - 1);
-    if (reChatID !== 0) {
+    if (reChatID === true) {
       messages = messages.slice(0, reChatID - 1);
     }
     console.log("aaaa");
