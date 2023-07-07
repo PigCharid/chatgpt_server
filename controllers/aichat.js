@@ -63,21 +63,21 @@ export const aichat = async (req, res) => {
     if (!reChat) {
       reChatID += 1;
     }
-    const oldVerify = await MessageModal.findOne({ id, reChatID });
-    console.log("oldVerify", oldVerify);
-    // await MessageModal.updateOne(
-    //   {
-    //     id: id,
-    //     reChatID: reChatID,
-    //   },
-    //   {
-    //     id: id,
-    //     reChatID: reChatID,
-    //     role: "assistant",
-    //     content: chatCompletion.data.choices[0].message,
-    //     createdAt: new Date(),
-    //   }
-    // );
+    // const oldVerify = await MessageModal.findOneAnd({ id, reChatID });
+    // console.log("oldVerify", oldVerify);
+    await MessageModal.updateOne(
+      {
+        id: id,
+        reChatID: reChatID,
+      },
+      {
+        id: id,
+        reChatID: reChatID,
+        role: "assistant",
+        content: chatCompletion.data.choices[0].message,
+        createdAt: new Date(),
+      }
+    );
   } catch (error) {
     console.log("error", error);
     res.status(510).json({ message: "AI咨询网络错误" });
