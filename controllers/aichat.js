@@ -3,32 +3,38 @@ import MessageModal from "../models/message.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 export const aichat = async (req, res) => {
-  const { id, role, prompt } = req.body;
+  const { id, reChatID, role, prompt } = req.body;
 
   console.log("id", id);
   console.log("role", role);
   console.log("prompt", prompt);
+  console.log("reChatID", reChatID);
   // 检查参数信息
   if (prompt === undefined || "") {
     res.status(510).json({ message: "咨询信息不能为空" });
   }
   try {
-    await MessageModal.create({
-      id: id,
-      role: role,
-      content: prompt,
-      createdAt: new Date(),
-    });
+    if (reChatID === 0) {
+      await MessageModal.create({
+        id: id,
+        role: role,
+        content: prompt,
+        createdAt: new Date(),
+      });
+    }
+
     const histMessages = await MessageModal.find({ id });
 
     console.log("message", histMessages);
     // 组上下文对象
-    const messages = histMessages.map(({ role, content }) => ({
+    let messages = histMessages.map(({ role, content }) => ({
       role,
       content,
     }));
+    if (reChatID !== 0) {
+      messages = messages.slice(0, reChatID - 1);
+    }
     console.log("aaaa");
-
     console.log("组成的对象", messages);
 
     const configuration = new Configuration({
@@ -50,6 +56,12 @@ export const aichat = async (req, res) => {
     });
   } catch (error) {
     console.log("error", error);
+    await MessageModal.create({
+      id: id,
+      role: "assistant",
+      content: "",
+      createdAt: new Date(),
+    });
     res.status(510).json({ message: "AI咨询网络错误" });
   }
 };
