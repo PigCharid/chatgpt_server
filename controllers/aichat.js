@@ -43,7 +43,7 @@ export const aichat = async (req, res) => {
       content,
     }));
     messages = messages.slice(0, messages.length - 1);
-    if (reChatID === true) {
+    if (reChat === true) {
       messages = messages.slice(0, reChatID - 1);
     }
     console.log("组成的对象", messages);
