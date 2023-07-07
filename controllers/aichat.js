@@ -39,6 +39,7 @@ export const aichat = async (req, res) => {
       role,
       content,
     }));
+    messages = messages.slice(0, messages.length - 1);
     if (reChatID !== 0) {
       messages = messages.slice(0, reChatID - 1);
     }
