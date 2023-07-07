@@ -61,10 +61,10 @@ export const aichat = async (req, res) => {
     console.log(chatCompletion.data.choices[0].message);
     res.status(200).json({ message: chatCompletion.data.choices[0].message });
     if (!reChat) {
-      reChat += 1;
+      reChatID += 1;
     }
     const oldVerify = await MessageModal.findOne({ id, reChatID });
-    console.log("oldVerify",oldVerify)
+    console.log("oldVerify", oldVerify);
     // await MessageModal.updateOne(
     //   {
     //     id: id,
