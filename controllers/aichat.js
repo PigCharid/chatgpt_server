@@ -17,8 +17,16 @@ export const aichat = async (req, res) => {
     if (reChatID === 0) {
       await MessageModal.create({
         id: id,
+        reChatID: reChatID,
         role: role,
         content: prompt,
+        createdAt: new Date(),
+      });
+      await MessageModal.create({
+        id: id,
+        reChatID: reChatID,
+        role: "assistant",
+        content: "",
         createdAt: new Date(),
       });
     }
@@ -48,20 +56,21 @@ export const aichat = async (req, res) => {
     console.log("chatCompletion", chatCompletion);
     console.log(chatCompletion.data.choices[0].message);
     res.status(200).json({ message: chatCompletion.data.choices[0].message });
-    await MessageModal.create({
-      id: id,
-      role: chatCompletion.data.choices[0].message.role,
-      content: chatCompletion.data.choices[0].message.content,
-      createdAt: new Date(),
-    });
+    await MessageModal.update(
+      {
+        id: id,
+        reChatID: reChatID,
+      },
+      {
+        id: id,
+        reChatID: reChatID,
+        role: "assistant",
+        content: chatCompletion.data.choices[0].message,
+        createdAt: new Date(),
+      }
+    );
   } catch (error) {
     console.log("error", error);
-    await MessageModal.create({
-      id: id,
-      role: "assistant",
-      content: "",
-      createdAt: new Date(),
-    });
     res.status(510).json({ message: "AI咨询网络错误" });
   }
 };
