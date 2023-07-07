@@ -57,8 +57,8 @@ export const aichat = async (req, res) => {
       model: "gpt-3.5-turbo",
       messages: messages,
     });
-    console.log("chatCompletion", chatCompletion);
-    // console.log(chatCompletion.data.choices[0].message);
+    // console.log("chatCompletion", chatCompletion);
+    console.log(chatCompletion.data.choices[0].message);
     res.status(200).json({ message: chatCompletion.data.choices[0].message });
     await MessageModal.updateOne(
       {
