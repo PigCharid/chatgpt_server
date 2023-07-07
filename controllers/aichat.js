@@ -46,7 +46,6 @@ export const aichat = async (req, res) => {
     if (reChatID === true) {
       messages = messages.slice(0, reChatID - 1);
     }
-    console.log("aaaa");
     console.log("组成的对象", messages);
 
     const configuration = new Configuration({
@@ -74,7 +73,7 @@ export const aichat = async (req, res) => {
         id: id,
         reChatID: reChatID,
         role: "assistant",
-        content: chatCompletion.data.choices[0].message,
+        content: chatCompletion.data.choices[0].message.content,
         createdAt: new Date(),
       }
     );
