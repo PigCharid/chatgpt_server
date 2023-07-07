@@ -3,7 +3,7 @@ import MessageModal from "../models/message.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 export const aichat = async (req, res) => {
-  const { id, reChatID, role, prompt, reChat } = req.body;
+  let { id, reChatID, role, prompt, reChat } = req.body;
 
   console.log("id", id);
   console.log("role", role);
